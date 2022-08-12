@@ -17,24 +17,29 @@ export const CreateClientsDao = (payload, callback) => {
     });
 }
 
-export const UpdateClientsDao = (idclients, payload, callback) => {
-    const sql = `UPDATE clients SET ?`;
-    connection.query(sql, payload, (error, resp) => {
-        if(error) callback(error);
-        callback(null, resp)
-});
-}
+// export const UpdateClientsDao = (uuid, payload, callback) => {
+//     console.log("datos recibidos del dao ",uuid,payload)
+//     const sql = `UPDATE clients SET ?`;
+//     connection.query(sql, payload,   (error, resp) => {
+//         if(error) callback(error);
+//         callback(null, resp)
+// });
+// }
 
 export const FindClientsById = (id, callback) => {
-    const sql = `SELECT * FROM clients WHERE uuid = ${id}`;
+    console.log("este es ", id);
+    const sql = `SELECT * FROM clients WHERE uuid = '${id}'`;
+    console.log(sql);
     connection.query(sql, (err, resp) => {
+        console.log (err, resp);
         if(err) callback(error);
         callback(null, resp)
     });
 }
 
 export const DeleteClientsDao = (uuid, callback) =>{
-    const sql = `DELETE FROM clients WHERE uuid= ${uuid}`;
+    console.log("este se esta eliminando", uuid)
+    const sql = `DELETE FROM clients WHERE uuid = '${uuid}'`;
     connection.query(sql,(err,resp) =>{
         if(err) callback(error);
         callback(null, resp)

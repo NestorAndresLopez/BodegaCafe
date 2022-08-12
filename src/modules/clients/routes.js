@@ -16,9 +16,9 @@ router.post('/addclients',  Controllers.CreateClients);
 //Probar que pasa si tengo dos usuarios con el mismo id me trae los dos asi puedo buscar por nombre
 
 //UPDATE PROVIDERS
-router.put('/updateclients/:idclients', Controllers.UpdateClients);
+router.put('/updateclients/:uuid', Controllers.UpdateClients);
 
 //DELETE PROVIDERS
-router.delete('/deleteclients/:idclients', Controllers.DeleteClients);
+router.delete('/deleteclients/:uuid', Controllers.DeleteClients);
 
 export default router;

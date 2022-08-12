@@ -1,4 +1,5 @@
 import {v4 as uuidv4} from 'uuid';
+import { connection } from '../../utils/database.js';
 import * as Dao from "./dao.js";
 
 
@@ -28,8 +29,8 @@ export const CreateClients = (req, res) => {
         nameclients: req.body.nameclients,
         cityclients: req.body.cityclients,
         addressclients: req.body.addressclients,
-        phoneNumberClients: req.body.phoneNumberClients,
-        emailClients: req.body.emailClients
+        phoneNumberclients: req.body.phoneNumberclients,
+        emailclients: req.body.emailclients
     }
     Dao.CreateClientsDao(clientsObj, (error, resp) => {
         if(error) throw error
@@ -37,6 +38,8 @@ export const CreateClients = (req, res) => {
     })
 }
 export const GetClientsById = (req, res) => {
+    console.log("getclientsbyid");
+    console.log(req.params.id);
     Dao.FindClientsById(req.params.id, (error, resp) => {
         if(error) throw error
         const response = {
@@ -70,21 +73,38 @@ export const FindClientsById = (req, res, next) => {
         next()
     })
 }
+// export const UpdateClients = (req, res)=>{
+//     const {uuid} = req.params;
+    
+//     const updateclients ={
+//         uuid: req.body.uuid,
+//         nameclients: req.body.nameclients,
+//         cityclients: req.body.cityclients,
+//         addressclients: req.body.addressclients,
+//         phoneNumberclients: req.body.phoneNumberclients,
+//         emailclients: req.body.emailclients
+//     }
+//             Dao.UpdateClientsDao(updateclients,uuid,(error, resp)=>{
+//             if(error) throw error;
+//                 resp.send('Clients Update');
+// })
+// }
+
 export const UpdateClients = (req, res)=>{
-    const {idclients} = req.params;
+    const {uuid} = req.params;
+    
     const updateclients ={
-        idclients: req.body.idclients,
+        uuid: req.body.uuid,
         nameclients: req.body.nameclients,
         cityclients: req.body.cityclients,
         addressclients: req.body.addressclients,
-        phoneNumberClients: req.body.phoneNumberClients,
-        emailClients: req.body.emailClients
+        phoneNumberclients: req.body.phoneNumberclients,
+        emailclients: req.body.emailclients
     }
-            Dao.UpdateClientsDao(idclients,updateclients,(error, resp)=>{
-            if(error) throw error;
-                res.send('Clients Update');
-})
+    connection.query('UPDATE clients set ? WHERE uuid = ?', [updateclients, uuid]);
+        res.send('Clients Update')
 }
+
 
 export const DeleteClients =(req, res)=>{
     const {uuid} = req.params;
